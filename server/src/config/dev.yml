@@ -52,7 +52,7 @@ redis:
 
 # jwt 配置
 jwt:
-  secretkey: 'you_secretkey'
+  secretkey: '8Zk@fQ2$pL7xR9mK3sT5dG1vB4nH6jM8wP0eS2cV5bN7yF9rD3tA'
   expiresin: '1h'
   refreshExpiresIn: '2h'
 # 权限 白名单配置
