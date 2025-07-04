@@ -1,93 +1,103 @@
+Language : 🇺🇸 | [🇨🇳](./README.zh-CN.md)
+
 <p align="center">
-	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d0a9303e11d522a06cd263f3079027715.png">
+  <a href="https://nestjs.com">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://nestjs.com/logo-small-gradient.76616405.svg">
+      <img src="https://docs.nestjs.com/assets/logo-small-gradient.svg" height="128">
+    </picture>
+    <h1 align="center">Nest-Admin</h1>
+  </a>
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.8.9</h1>
-<h4 align="center">基于NestJs+Vue前后端分离的NodeJs快速开发框架</h4>
-<p align="center">
-	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://gitee.com/y_project/RuoYi-Vue/badge/star.svg?theme=dark"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue"><img src="https://img.shields.io/badge/RuoYi-v3.8.9-brightgreen.svg"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
-</p>
 
-## 平台简介
+<div align="center">
 
-若依是一套全部开源的快速开发平台，毫无保留给个人及企业免费使用。
+A out of the box backend management system based on the latest version of Nestjs
 
-* 前端采用Vue、Element UI。
-* 后端采用NestJs、Redis & Jwt。
-* 权限认证使用Jwt，支持多终端认证系统。
-* 支持加载动态权限菜单，多方式轻松权限控制。
-* 高效率开发，使用代码生成器可以一键生成前后端代码。
-* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/4JJiAFOP)&nbsp;&nbsp;
+![](./image.png)
 
-## 内置功能
+</div>
 
-1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
-2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
-3.  岗位管理：配置系统用户所属担任职务。
-4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
-5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
-6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
-7.  参数管理：对系统动态配置常用参数。
-8.  通知公告：系统通知公告信息发布维护。
-9.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-10. 登录日志：系统登录日志记录查询包含登录异常。
-11. 在线用户：当前系统中活跃用户状态监控。
-12. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
-13. 代码生成：前后端代码的生成（vue、module、controller、service、repository、entity、sql）支持CRUD下载 。
-14. 系统接口：根据业务代码自动生成相关的api接口文档。
-15. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
-16. 缓存监控：对系统的缓存信息查询，命令统计等。
-17. 在线构建器：拖动表单元素生成相应的HTML代码。
+- Preview: https://nest-admin.dooring.vip/
+- Domestic Mirror: https://gitee.com/tao-zhi/nest-admin
 
-## 在线体验
+## 1.0 is out! 🎉🎉🎉
 
-- admin/admin123  
-- 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
+Nest-Admin 1.0.0
 
-演示地址：http://vue.ruoyi-nest.vip  
+## Built in features
 
-## 演示图
+1. User management: Users are system operators, and this function mainly completes system user configuration.
+2. Department management: Configure the system's organizational structure (company, department, group), and display a tree structure that supports data permissions.
+3. Job management: Configure the positions that system users belong to.
+4. Menu management: Configure system menus, operation permissions, button permission identification, etc.
+5. Role management: Assign role menu permissions and set roles to divide data scope permissions by organization.
+6. Dictionary management: Maintaining fixed data that is frequently used in the system.
+7. Parameter management: Dynamically configure commonly used parameters for the system.
+8. Notification announcement: System notification announcement information release and maintenance.
+9. Operation log: Record and query normal system operation logs; Logging and querying of system exception information.
+10. Login log: The system login log records and queries contain login exceptions.
+11. Online users: monitoring the status of active users in the current system.
+12. Timed tasks: Online (add, modify, delete) task scheduling includes execution result logs.
+13. Code generation: The generation of front-end and back-end code (node, HTML, SQL) supports CRUD downloading.
+14. System Interface: Automatically generate relevant API interface documents based on business code.
+15. Service monitoring: Monitor current system CPU, memory, disk, stack, and other related information.
+16. Cache monitoring: Queries, deletes, clears, and other operations on the system's cache.
+17. Online Builder: Drag form elements to generate corresponding HTML code.
+18. Connection Pool Monitoring: Monitor the current status of the system database connection pool and analyze SQL to identify system performance bottlenecks.
 
-<table>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/cd1f90be5f2684f4560c9519c0f2a232ee8.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/1cbcf0e6f257c7d3a063c0e3f2ff989e4b3.jpg"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8074972883b5ba0622e13246738ebba237a.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-9f88719cdfca9af2e58b352a20e23d43b12.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-39bf2584ec3a529b0d5a3b70d15c9b37646.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-936ec82d1f4872e1bc980927654b6007307.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-b2d62ceb95d2dd9b3fbe157bb70d26001e9.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d67451d308b7a79ad6819723396f7c3d77a.png"/></td>
-    </tr>	 
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/5e8c387724954459291aafd5eb52b456f53.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/644e78da53c2e92a95dfda4f76e6d117c4b.jpg"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8370a0d02977eebf6dbf854c8450293c937.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-49003ed83f60f633e7153609a53a2b644f7.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d4fe726319ece268d4746602c39cffc0621.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-c195234bbcd30be6927f037a6755e6ab69c.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/b6115bc8c31de52951982e509930b20684a.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-5e4daac0bb59612c5038448acbcef235e3a.png"/></td>
-    </tr>
-</table>
+## Usage
 
+### Install
 
-## 若依前后端分离交流群
+```shell
+$ git clone git@github.com:taozhi1010/nest-admin.git
+```
 
-QQ群： [![加入QQ群](https://img.shields.io/badge/151450850-blue.svg)](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=ZMf4C__lfo6XoBcTqZu-1-rnQ8nfPY44&authKey=qCtd5hLjiMJ4HVWVNZzttlJRyImSDw0tYe71h2I%2BQo5TVFolcJko6N%2BGK8yFP6r4&noverify=0&group_code=224774162) 点击按钮入群。
+Install dependencies:
 
+```shell
+$ cd nest-admin && yarn
+```
 
-<img src="./pay.png"/>
+run：
+
+```shell
+# yarn start:dev
+$ yarn start:dev
+```
+
+## Browsers support
+
+Modern browsers.
+
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Edge                                                                                                                                                                                                  | last 2 versions                                                                                                                                                                                                   | last 2 versions                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                               | last 2 versions                                                                                                                                                                                           |
+
+## More Production
+
+| name                                                                              | Description                                                                             |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [H5-Dooring](https://github.com/MrXujiang/h5-Dooring)                             | 让 H5 制作像搭积木一样简单, 轻松搭建 H5 页面, H5 网站, PC 端网站, LowCode 平台.         |
+| [V6.Dooring](https://github.com/MrXujiang/v6.dooring.public)                      | 可视化大屏解决方案, 提供一套可视化编辑引擎, 助力个人或企业轻松定制自己的可视化大屏应用. |
+| [dooring-electron-lowcode](https://github.com/MrXujiang/dooring-electron-lowcode) | 基于 electron 的 H5-Dooring 编辑器桌面端.                                               |
+| [DooringX](https://github.com/H5-Dooring/dooringx)                                | 快速高效搭建可视化拖拽平台.                                                             |
+| [Mitu](https://github.com/H5-Dooring/mitu-editor)                                 | 一款轻量级且可扩展的图片/图形编辑器解决方案.                                            |
+| [xijs](https://github.com/MrXujiang/xijs)                                         | 一个开箱即用的面向业务的 javascript 工具库                                              |
+
+## Contributing
+
+Any type of contribution is welcome, here are some examples of how you may contribute to this project:
+
+- Use Ant Design Pro in your daily work.
+- Submit [issues](https://github.com/taozhi1010/nest-admin/issues) to report bugs or ask questions.
+- Propose [pull requests](https://github.com/taozhi1010/nest-admin/pulls) to improve our code.
+
+## Concat
+
+wechat: `taozhi10100`
+
+|                           WeChat communication group                           |
+| :----------------------------------------------------------------------------: |
+| <img src="https://fast.dooring.cn/static/nest-admin-wechat-new.jpg" width=170> |
