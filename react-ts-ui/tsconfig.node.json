@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "composite": true, // 启用项目编译
+    "module": "ESNext", // 使用ES模块
+    "moduleResolution": "Node", // Node风格的模块解析
+    "allowSyntheticDefaultImports": true, // 允许默认导入
+
+    "target": "ES2022", // 编译目标版本
+    "skipLibCheck": true, // 跳过库类型检查
+    "types": ["node"] // 包含Node.js类型定义
+  },
+  "include": [
+    // 包含的文件
+    "vite.config.ts", // Vite配置文件
+    "vite.plugins.ts", // 自定义Vite插件
+    "postcss.config.js" // PostCSS配置
+  ]
+}

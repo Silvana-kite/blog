@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", // 升级编译目标版本
+    "incremental": true, // 启用增量编译
+    "allowImportingTsExtensions": true,
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"], // 更新包含的库声明
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["react", "react-dom", "react-router-dom"], // 添加 Storybook 的类型声明
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true, // 启用严格的空值检查
+    "noImplicitAny": true // 禁止隐式的any类型
+  },
+  "include": [
+    "src",
+    "types",
+    "stories/*.tsx" // 新增包含的故事书文件
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

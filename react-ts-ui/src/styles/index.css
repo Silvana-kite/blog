@@ -1,0 +1,14 @@
+/* @import './tailwind.css'; */
+/* // @import 'ant/dist/reset.css'; */
+/* @import 'antd/dist/reset.css'; */
+@layer reset, antd;
+@import url(antd/dist/reset.css) layer(reset);
+html {
+  font-size: 16px; /* 与 rootValue 保持一致 */
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 24px; /* 响应式调整 */
+  }
+}

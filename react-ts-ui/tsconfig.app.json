@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", // 升级编译目标版本
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"], // 更新包含的库声明
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+    }
+  },
+  "include": ["src", "test/*.tsx"], // 新增包含的测试文件
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
