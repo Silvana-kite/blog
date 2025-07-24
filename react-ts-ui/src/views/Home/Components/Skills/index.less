@@ -1,0 +1,70 @@
+.skill-container {
+  .skill-header-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 80px;
+    .title {
+      position: relative;
+      font-size: 48px;
+      font-weight: 700;
+      span {
+        &:first-child {
+          color: #fff;
+        }
+        &:last-child {
+          color: var(--cyber-blue);
+        }
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 4px;
+        background: linear-gradient(
+          to left,
+          #05d9e8,
+          #05d9e87e,
+          #ff2a6e7e,
+          #ff2a6d
+        );
+      }
+    }
+  }
+
+  .content-container {
+    padding: 24px;
+    position: relative;
+    .flex-box {
+      padding: 12px;
+      width: 380px;
+      height: 320px;
+      transition: all 0.5s ease;
+      transition-timing-function: cubic-bezier(0.4,0,0.2,1);
+      &:hover{
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      &:nth-child(1) {
+        border: 1px solid var(--cyber-blue);
+      }
+      &:nth-child(2) {
+        border: 1px solid var(--cyber-pink);
+      }
+      &:nth-child(3) {
+        border: 1px solid var(--cyber-green);
+      }
+      .h4{
+        color: #fff;
+        font-weight: 700;
+      }
+      .p-text{
+        color: #ccc;
+      }
+    }
+  }
+}

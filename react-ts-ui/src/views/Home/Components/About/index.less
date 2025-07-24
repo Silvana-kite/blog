@@ -1,0 +1,109 @@
+.about-container {
+  .ablout-header-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 80px;
+    .title {
+      position: relative;
+      font-size: 48px;
+      font-weight: 700;
+      span {
+        &:first-child {
+          color: var(--cyber-pink);
+        }
+        &:last-child {
+          color: #fff;
+        }
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          #05d9e8,
+          #05d9e87e,
+          #ff2a6e7e,
+          #ff2a6d
+        );
+      }
+    }
+  }
+
+  .content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-left: 24px;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 40%;
+      height: 100%;
+      border: 1px solid var(--cyber-blue);
+      transform: rotate(4deg);
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      width: 40%;
+      height: 100%;
+      border: 1px solid var(--cyber-pink);
+      transform: rotate(-4deg) translateX(-24px);
+      z-index: 1;
+    }
+    .img-box {
+      flex: 1;
+      position: relative;
+      z-index: 2;
+    }
+    .flex-container {
+      flex: 1;
+      padding-left: 24px;
+      .h3-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--cyber-blue);
+      }
+      .text {
+        width: 80%;
+        font-size: 18px;
+        font-weight: 18px;
+        color: rgb(209 213 219);
+      }
+      .btn {
+        width: 240px;
+        height: 40px;
+        background-color: transparent;
+        font-size: 14px;
+        color: #4fff4b;
+        font-weight: 600;
+        border: 1px solid rgb(79 255 75);
+      }
+      .gutter-col {
+        display: flex;
+        align-items: center;
+        .h5 {
+          font-size: 18px;
+          font-weight: 700;
+          line-height: 0;
+          color: #fff;
+        }
+        .p-text {
+          font-size: 18px;
+          line-height: 0;
+          color: #ffffffa5;
+        }
+      }
+    }
+  }
+}

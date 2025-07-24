@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEON|VOID - Cyberpunk Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              dark: '#0D0221',
+              neon: {
+                pink: '#FF2A6D',
+                blue: '#05D9E8',
+                purple: '#D300C5',
+                green: '#4FFF4B'
+              }
+            }
+          },
+          fontFamily: {
+            cyber: ['Orbitron', 'Rajdhani', 'sans-serif'],
+            mono: ['Share Tech Mono', 'monospace']
+          },
+          animation: {
+            'glow': 'glow 2s ease-in-out infinite alternate',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'scan': 'scan 3s linear infinite',
+            'matrix': 'matrix 10s linear infinite'
+          },
+          keyframes: {
+            glow: {
+              '0%': { 'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #05D9E8, 0 0 20px #05D9E8' },
+              '100%': { 'text-shadow': '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #FF2A6D, 0 0 40px #FF2A6D' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' }
+            },
+            scan: {
+              '0%': { 'background-position': '0% -100%' },
+              '100%': { 'background-position': '0% 100%' }
+            },
+            matrix: {
+              '0%': { 'background-position': '0 0' },
+              '100%': { 'background-position': '0 500px' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-glow {
+        text-shadow: 0 0 10px currentColor;
+      }
+      .neon-border {
+        box-shadow: 0 0 5px currentColor, inset 0 0 5px currentColor;
+      }
+      .grid-bg {
+        background-image: linear-gradient(rgba(5, 217, 232, 0.1) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(5, 217, 232, 0.1) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .scanline {
+        background: linear-gradient(to bottom,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0) 100%);
+        background-size: 100% 4px;
+        animation: scan 3s linear infinite;
+      }
+      .cyber-button {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      .cyber-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 42, 109, 0.3), transparent);
+        transition: all 0.6s ease;
+      }
+      .cyber-button:hover::before {
+        left: 100%;
+      }
+      .glass-effect {
+        backdrop-filter: blur(10px);
+        background-color: rgba(13, 2, 33, 0.7);
+      }
+    }
+  </style>
+  
+  <!-- 字体引入 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-cyber-dark text-gray-100 min-h-screen font-cyber overflow-x-hidden grid-bg">
+  <!-- 背景效果 -->
+  <div class="fixed inset-0 z-0 opacity-30">
+    <div class="absolute inset-0 bg-gradient-to-br from-cyber-neon-blue/20 to-cyber-neon-pink/20"></div>
+    <div class="absolute inset-0 scanline"></div>
+  </div>
+  
+  <!-- 顶部导航 -->
+  <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+    <div class="glass-effect border-b border-cyber-neon-blue/30">
+      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a href="#" class="text-2xl font-bold text-white flex items-center gap-2">
+          <span class="text-cyber-neon-blue text-glow">NEON</span><span class="text-cyber-neon-pink text-glow">VOID</span>
+        </a>
+        
+        <!-- 桌面导航 -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#home" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium">HOME</a>
+          <a href="#about" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium">ABOUT</a>
+          <a href="#skills" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium">SKILLS</a>
+          <a href="#projects" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium">PROJECTS</a>
+          <a href="#contact" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium">CONTACT</a>
+        </nav>
+        
+        <!-- 移动端菜单按钮 -->
+        <button class="md:hidden text-white text-2xl" id="menuBtn">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div class="md:hidden glass-effect absolute w-full transform -translate-y-full transition-transform duration-300 ease-in-out" id="mobileMenu">
+      <div class="container mx-auto px-4 py-4 flex flex-col gap-4">
+        <a href="#home" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium py-2">HOME</a>
+        <a href="#about" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium py-2">ABOUT</a>
+        <a href="#skills" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium py-2">SKILLS</a>
+        <a href="#projects" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium py-2">PROJECTS</a>
+        <a href="#contact" class="text-gray-200 hover:text-cyber-neon-blue transition-colors duration-300 font-medium py-2">CONTACT</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要内容 -->
+  <main class="relative z-10">
+    <!-- 英雄区域 -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div class="absolute inset-0 bg-cyber-dark opacity-80"></div>
+      
+      <!-- 赛博朋克风格装饰元素 -->
+      <div class="absolute top-1/4 left-10 w-20 h-20 border border-cyber-neon-pink rounded-full animate-pulse-slow"></div>
+      <div class="absolute bottom-1/3 right-10 w-32 h-32 border border-cyber-neon-blue rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+      <div class="absolute top-1/2 left-1/3 w-16 h-16 border border-cyber-neon-green rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+      
+      <div class="container mx-auto px-4 py-20 relative z-10">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+          <div class="w-full md:w-1/2 text-center md:text-left">
+            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold leading-none mb-4">
+              <span class="block text-white">I'M A</span>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-neon-blue to-cyber-neon-pink animate-glow">CYBERPUNK</span>
+              <span class="block text-white">DEVELOPER</span>
+            </h1>
+            <p class="text-[clamp(1rem,3vw,1.25rem)] text-gray-300 mb-8 max-w-xl mx-auto md:mx-0">
+              Crafting immersive digital experiences at the intersection of technology and artistic expression.
+            </p>
+            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+              <a href="#projects" class="px-8 py-3 bg-cyber-neon-pink text-white font-bold rounded-sm cyber-button border border-cyber-neon-pink hover:bg-transparent transition-all duration-300 transform hover:-translate-y-1">
+                VIEW MY WORK
+              </a>
+              <a href="#contact" class="px-8 py-3 bg-transparent text-cyber-neon-blue font-bold rounded-sm cyber-button border border-cyber-neon-blue hover:bg-cyber-neon-blue/20 transition-all duration-300 transform hover:-translate-y-1">
+                CONTACT ME
+              </a>
+            </div>
+          </div>
+          
+          <div class="w-full md:w-1/2 flex justify-center">
+            <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-cyber-neon-blue/50 animate-float">
+              <div class="absolute inset-0 bg-gradient-to-br from-cyber-neon-blue/30 to-cyber-neon-pink/30"></div>
+              <img src="https://picsum.photos/seed/cyberdev/400/400" alt="Profile image" class="w-full h-full object-cover mix-blend-overlay">
+              <div class="absolute inset-0 grid-bg opacity-50"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 向下滚动指示器 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <a href="#about" class="text-cyber-neon-blue text-2xl opacity-80 hover:opacity-100 transition-opacity">
+            <i class="fa fa-angle-down"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 关于我 -->
+    <section id="about" class="py-24 relative">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4">
+            <span class="text-cyber-neon-pink text-glow">ABOUT</span> ME
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-cyber-neon-blue to-cyber-neon-pink mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div class="relative">
+            <div class="absolute -top-4 -left-4 w-full h-full border border-cyber-neon-blue rounded-sm transform rotate-3"></div>
+            <div class="absolute -bottom-4 -right-4 w-full h-full border border-cyber-neon-pink rounded-sm transform -rotate-3"></div>
+            <img src="https://picsum.photos/seed/cyberabout/600/800" alt="About me image" class="w-full h-auto rounded-sm relative z-10">
+          </div>
+          
+          <div>
+            <h3 class="text-2xl font-bold mb-4 text-cyber-neon-blue">CYBERPUNK DEVELOPER & DESIGNER</h3>
+            <p class="text-gray-300 mb-6">
+              I'm a passionate frontend developer with a deep love for cyberpunk aesthetics and immersive digital experiences. 
+              My work sits at the intersection of technology and art, creating interfaces that are not just functional but 
+              also visually stunning.
+            </p>
+            <p class="text-gray-300 mb-8">
+              With over 5 years of experience in web development, I specialize in creating responsive, 
+              interactive websites and applications that push the boundaries of traditional design.
+            </p>
+            
+            <div class="grid grid-cols-2 gap-6 mb-8">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-cyber-neon-pink/20 flex items-center justify-center text-cyber-neon-pink">
+                  <i class="fa fa-code"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">Frontend Development</h4>
+                  <p class="text-sm text-gray-400">HTML, CSS, JavaScript, React</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue">
+                  <i class="fa fa-paint-brush"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">UI/UX Design</h4>
+                  <p class="text-sm text-gray-400">Figma, Adobe XD, Sketch</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-cyber-neon-green/20 flex items-center justify-center text-cyber-neon-green">
+                  <i class="fa fa-mobile"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">Responsive Design</h4>
+                  <p class="text-sm text-gray-400">Mobile-First Development</p>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-cyber-neon-purple/20 flex items-center justify-center text-cyber-neon-purple">
+                  <i class="fa fa-rocket"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold">Performance Optimization</h4>
+                  <p class="text-sm text-gray-400">Web Vitals, Lighthouse</p>
+                </div>
+              </div>
+            </div>
+            
+            <a href="#contact" class="inline-block px-8 py-3 bg-transparent text-cyber-neon-green font-bold rounded-sm cyber-button border border-cyber-neon-green hover:bg-cyber-neon-green/20 transition-all duration-300 transform hover:-translate-y-1">
+              LET'S WORK TOGETHER
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 技能 -->
+    <section id="skills" class="py-24 relative bg-gradient-to-b from-cyber-dark to-cyber-dark/90">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4">
+            MY <span class="text-cyber-neon-blue text-glow">SKILLS</span>
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-cyber-neon-pink to-cyber-neon-blue mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 技能卡片 1 -->
+          <div class="bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-blue/30 rounded-sm p-6 hover:transform hover:scale-105 transition-transform duration-300 group">
+            <div class="w-16 h-16 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center mb-6 group-hover:bg-cyber-neon-blue/40 transition-colors duration-300">
+              <i class="fa fa-code text-2xl text-cyber-neon-blue"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-white">Frontend Development</h3>
+            <p class="text-gray-400 mb-4">Creating responsive, interactive user interfaces with modern JavaScript frameworks and libraries.</p>
+            
+            <div class="space-y-3 mt-6">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">HTML5 & CSS3</span>
+                  <span class="text-sm text-cyber-neon-blue">95%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-blue to-cyber-neon-pink" style="width: 95%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">JavaScript</span>
+                  <span class="text-sm text-cyber-neon-blue">90%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-blue to-cyber-neon-pink" style="width: 90%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">React</span>
+                  <span class="text-sm text-cyber-neon-blue">85%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-blue to-cyber-neon-pink" style="width: 85%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 技能卡片 2 -->
+          <div class="bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-pink/30 rounded-sm p-6 hover:transform hover:scale-105 transition-transform duration-300 group">
+            <div class="w-16 h-16 rounded-full bg-cyber-neon-pink/20 flex items-center justify-center mb-6 group-hover:bg-cyber-neon-pink/40 transition-colors duration-300">
+              <i class="fa fa-paint-brush text-2xl text-cyber-neon-pink"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-white">UI/UX Design</h3>
+            <p class="text-gray-400 mb-4">Crafting visually stunning and user-friendly interfaces with a focus on user experience.</p>
+            
+            <div class="space-y-3 mt-6">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Figma</span>
+                  <span class="text-sm text-cyber-neon-pink">90%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-pink to-cyber-neon-purple" style="width: 90%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Adobe XD</span>
+                  <span class="text-sm text-cyber-neon-pink">85%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-pink to-cyber-neon-purple" style="width: 85%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Prototyping</span>
+                  <span class="text-sm text-cyber-neon-pink">80%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-pink to-cyber-neon-purple" style="width: 80%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 技能卡片 3 -->
+          <div class="bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-green/30 rounded-sm p-6 hover:transform hover:scale-105 transition-transform duration-300 group">
+            <div class="w-16 h-16 rounded-full bg-cyber-neon-green/20 flex items-center justify-center mb-6 group-hover:bg-cyber-neon-green/40 transition-colors duration-300">
+              <i class="fa fa-cogs text-2xl text-cyber-neon-green"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3 text-white">Toolchain</h3>
+            <p class="text-gray-400 mb-4">Efficient workflow with modern development tools and methodologies.</p>
+            
+            <div class="space-y-3 mt-6">
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Git & GitHub</span>
+                  <span class="text-sm text-cyber-neon-green">95%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-green to-cyber-neon-blue" style="width: 95%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Tailwind CSS</span>
+                  <span class="text-sm text-cyber-neon-green">90%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-green to-cyber-neon-blue" style="width: 90%"></div>
+                </div>
+              </div>
+              
+              <div>
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Webpack</span>
+                  <span class="text-sm text-cyber-neon-green">80%</span>
+                </div>
+                <div class="h-2 bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyber-neon-green to-cyber-neon-blue" style="width: 80%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 技能图表 -->
+        <div class="mt-16 bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-purple/30 rounded-sm p-6">
+          <h3 class="text-xl font-bold mb-6 text-center text-cyber-neon-purple">TECHNOLOGY PROFICIENCY</h3>
+          <div class="h-80">
+            <canvas id="skillsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 项目 -->
+    <section id="projects" class="py-24 relative">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4">
+            MY <span class="text-cyber-neon-pink text-glow">PROJECTS</span>
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-cyber-neon-blue to-cyber-neon-pink mx-auto"></div>
+        </div>
+        
+        <!-- 项目筛选 -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <button class="project-filter px-6 py-2 bg-cyber-neon-blue text-white rounded-sm hover:bg-cyber-neon-blue/80 transition-colors duration-300" data-filter="all">ALL</button>
+          <button class="project-filter px-6 py-2 bg-transparent border border-cyber-neon-blue text-cyber-neon-blue rounded-sm hover:bg-cyber-neon-blue/20 transition-colors duration-300" data-filter="web">WEB</button>
+          <button class="project-filter px-6 py-2 bg-transparent border border-cyber-neon-blue text-cyber-neon-blue rounded-sm hover:bg-cyber-neon-blue/20 transition-colors duration-300" data-filter="ui">UI DESIGN</button>
+          <button class="project-filter px-6 py-2 bg-transparent border border-cyber-neon-blue text-cyber-neon-blue rounded-sm hover:bg-cyber-neon-blue/20 transition-colors duration-300" data-filter="app">APPLICATIONS</button>
+        </div>
+        
+        <!-- 项目网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 项目卡片 1 -->
+          <div class="project-card group" data-category="web">
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/cyberproject1/600/400" alt="Cyberpunk Dashboard Project" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 class="text-xl font-bold text-white mb-2">Cyberpunk Dashboard</h3>
+                <p class="text-gray-300 mb-4">A futuristic dashboard with real-time data visualization and interactive elements.</p>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1 bg-cyber-neon-blue/30 text-cyber-neon-blue text-xs rounded-full">React</span>
+                  <span class="px-3 py-1 bg-cyber-neon-pink/30 text-cyber-neon-pink text-xs rounded-full">Tailwind CSS</span>
+                  <span class="px-3 py-1 bg-cyber-neon-green/30 text-cyber-neon-green text-xs rounded-full">D3.js</span>
+                </div>
+                <div class="mt-4 flex gap-3">
+                  <a href="#" class="text-white bg-cyber-neon-pink/80 hover:bg-cyber-neon-pink px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-eye"></i> View
+                  </a>
+                  <a href="#" class="text-white bg-cyber-neon-blue/80 hover:bg-cyber-neon-blue px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-code"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 项目卡片 2 -->
+          <div class="project-card group" data-category="ui">
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/cyberproject2/600/400" alt="Neon UI Kit Design" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 class="text-xl font-bold text-white mb-2">Neon UI Kit</h3>
+                <p class="text-gray-300 mb-4">A comprehensive UI kit featuring neon accents, cyberpunk elements, and modern interfaces.</p>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1 bg-cyber-neon-pink/30 text-cyber-neon-pink text-xs rounded-full">Figma</span>
+                  <span class="px-3 py-1 bg-cyber-neon-blue/30 text-cyber-neon-blue text-xs rounded-full">UI Design</span>
+                  <span class="px-3 py-1 bg-cyber-neon-purple/30 text-cyber-neon-purple text-xs rounded-full">Prototyping</span>
+                </div>
+                <div class="mt-4 flex gap-3">
+                  <a href="#" class="text-white bg-cyber-neon-pink/80 hover:bg-cyber-neon-pink px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-eye"></i> View
+                  </a>
+                  <a href="#" class="text-white bg-cyber-neon-blue/80 hover:bg-cyber-neon-blue px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-code"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 项目卡片 3 -->
+          <div class="project-card group" data-category="app">
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/cyberproject3/600/400" alt="Cybernetic Mobile App" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 class="text-xl font-bold text-white mb-2">Cybernetic App</h3>
+                <p class="text-gray-300 mb-4">A mobile application with biometric authentication and augmented reality features.</p>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1 bg-cyber-neon-green/30 text-cyber-neon-green text-xs rounded-full">React Native</span>
+                  <span class="px-3 py-1 bg-cyber-neon-blue/30 text-cyber-neon-blue text-xs rounded-full">Firebase</span>
+                  <span class="px-3 py-1 bg-cyber-neon-pink/30 text-cyber-neon-pink text-xs rounded-full">AR</span>
+                </div>
+                <div class="mt-4 flex gap-3">
+                  <a href="#" class="text-white bg-cyber-neon-pink/80 hover:bg-cyber-neon-pink px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-eye"></i> View
+                  </a>
+                  <a href="#" class="text-white bg-cyber-neon-blue/80 hover:bg-cyber-neon-blue px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-code"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 项目卡片 4 -->
+          <div class="project-card group" data-category="web">
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/cyberproject4/600/400" alt="Neon E-commerce Platform" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 class="text-xl font-bold text-white mb-2">Neon Store</h3>
+                <p class="text-gray-300 mb-4">A high-performance e-commerce platform with advanced filtering and payment integration.</p>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1 bg-cyber-neon-blue/30 text-cyber-neon-blue text-xs rounded-full">Vue.js</span>
+                  <span class="px-3 py-1 bg-cyber-neon-pink/30 text-cyber-neon-pink text-xs rounded-full">Stripe</span>
+                  <span class="px-3 py-1 bg-cyber-neon-green/30 text-cyber-neon-green text-xs rounded-full">GraphQL</span>
+                </div>
+                <div class="mt-4 flex gap-3">
+                  <a href="#" class="text-white bg-cyber-neon-pink/80 hover:bg-cyber-neon-pink px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-eye"></i> View
+                  </a>
+                  <a href="#" class="text-white bg-cyber-neon-blue/80 hover:bg-cyber-neon-blue px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-code"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 项目卡片 5 -->
+          <div class="project-card group" data-category="ui">
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/cyberproject5/600/400" alt="Cyberpunk Game Interface" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 class="text-xl font-bold text-white mb-2">Game UI Design</h3>
+                <p class="text-gray-300 mb-4">A cyberpunk-inspired user interface for a multiplayer online game.</p>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1 bg-cyber-neon-purple/30 text-cyber-neon-purple text-xs rounded-full">Unity</span>
+                  <span class="px-3 py-1 bg-cyber-neon-pink/30 text-cyber-neon-pink text-xs rounded-full">C#</span>
+                  <span class="px-3 py-1 bg-cyber-neon-blue/30 text-cyber-neon-blue text-xs rounded-full">UI/UX</span>
+                </div>
+                <div class="mt-4 flex gap-3">
+                  <a href="#" class="text-white bg-cyber-neon-pink/80 hover:bg-cyber-neon-pink px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-eye"></i> View
+                  </a>
+                  <a href="#" class="text-white bg-cyber-neon-blue/80 hover:bg-cyber-neon-blue px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-code"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 项目卡片 6 -->
+          <div class="project-card group" data-category="app">
+            <div class="relative overflow-hidden rounded-sm">
+              <img src="https://picsum.photos/seed/cyberproject6/600/400" alt="Cyber Analytics Platform" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+              <div class="absolute inset-0 bg-gradient-to-t from-cyber-dark to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                <h3 class="text-xl font-bold text-white mb-2">Cyber Analytics</h3>
+                <p class="text-gray-300 mb-4">A real-time analytics dashboard with predictive modeling and AI insights.</p>
+                <div class="flex gap-2">
+                  <span class="px-3 py-1 bg-cyber-neon-green/30 text-cyber-neon-green text-xs rounded-full">Node.js</span>
+                  <span class="px-3 py-1 bg-cyber-neon-blue/30 text-cyber-neon-blue text-xs rounded-full">MongoDB</span>
+                  <span class="px-3 py-1 bg-cyber-neon-purple/30 text-cyber-neon-purple text-xs rounded-full">TensorFlow</span>
+                </div>
+                <div class="mt-4 flex gap-3">
+                  <a href="#" class="text-white bg-cyber-neon-pink/80 hover:bg-cyber-neon-pink px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-eye"></i> View
+                  </a>
+                  <a href="#" class="text-white bg-cyber-neon-blue/80 hover:bg-cyber-neon-blue px-4 py-2 rounded-sm transition-colors duration-300 flex items-center gap-1">
+                    <i class="fa fa-code"></i> Code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 联系 -->
+    <section id="contact" class="py-24 relative bg-gradient-to-b from-cyber-dark to-cyber-dark/90">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.5rem,5vw,3rem)] font-bold mb-4">
+            <span class="text-cyber-neon-blue text-glow">CONTACT</span> ME
+          </h2>
+          <div class="w-24 h-1 bg-gradient-to-r from-cyber-neon-pink to-cyber-neon-blue mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div>
+            <div class="bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-pink/30 rounded-sm p-8 mb-8">
+              <h3 class="text-2xl font-bold mb-6 text-white">Get In Touch</h3>
+              
+              <form id="contactForm">
+                <div class="mb-6">
+                  <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
+                  <input type="text" id="name" class="w-full px-4 py-3 bg-cyber-dark/80 border border-cyber-neon-blue/50 rounded-sm text-white focus:outline-none focus:border-cyber-neon-blue transition-colors duration-300" placeholder="Enter your name">
+                </div>
+                
+                <div class="mb-6">
+                  <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                  <input type="email" id="email" class="w-full px-4 py-3 bg-cyber-dark/80 border border-cyber-neon-blue/50 rounded-sm text-white focus:outline-none focus:border-cyber-neon-blue transition-colors duration-300" placeholder="Enter your email">
+                </div>
+                
+                <div class="mb-6">
+                  <label for="subject" class="block text-sm font-medium text-gray-300 mb-2">Subject</label>
+                  <input type="text" id="subject" class="w-full px-4 py-3 bg-cyber-dark/80 border border-cyber-neon-blue/50 rounded-sm text-white focus:outline-none focus:border-cyber-neon-blue transition-colors duration-300" placeholder="Enter subject">
+                </div>
+                
+                <div class="mb-6">
+                  <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                  <textarea id="message" rows="5" class="w-full px-4 py-3 bg-cyber-dark/80 border border-cyber-neon-blue/50 rounded-sm text-white focus:outline-none focus:border-cyber-neon-blue transition-colors duration-300" placeholder="Enter your message"></textarea>
+                </div>
+                
+                <button type="submit" class="w-full px-6 py-3 bg-cyber-neon-pink text-white font-bold rounded-sm cyber-button border border-cyber-neon-pink hover:bg-transparent transition-all duration-300 transform hover:-translate-y-1">
+                  SEND MESSAGE
+                </button>
+              </form>
+            </div>
+            
+            <div id="formResponse" class="hidden bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-green/30 rounded-sm p-6 text-cyber-neon-green">
+              <h4 class="font-bold mb-2">Message Sent Successfully!</h4>
+              <p>Thank you for reaching out. I'll get back to you as soon as possible.</p>
+            </div>
+          </div>
+          
+          <div>
+            <div class="bg-cyber-dark/60 backdrop-blur-md border border-cyber-neon-blue/30 rounded-sm p-8 h-full">
+              <h3 class="text-2xl font-bold mb-6 text-white">Contact Information</h3>
+              
+              <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue flex-shrink-0">
+                    <i class="fa fa-map-marker"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white mb-1">Location</h4>
+                    <p class="text-gray-400">Neo-Tokyo, Cyber District, 127th Floor</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-full bg-cyber-neon-pink/20 flex items-center justify-center text-cyber-neon-pink flex-shrink-0">
+                    <i class="fa fa-envelope"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white mb-1">Email</h4>
+                    <p class="text-gray-400">cyber@developer.com</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-full bg-cyber-neon-green/20 flex items-center justify-center text-cyber-neon-green flex-shrink-0">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white mb-1">Phone</h4>
+                    <p class="text-gray-400">+1 (555) CYBER-DEV</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 rounded-full bg-cyber-neon-purple/20 flex items-center justify-center text-cyber-neon-purple flex-shrink-0">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white mb-1">Working Hours</h4>
+                    <p class="text-gray-400">Mon-Fri: 9AM - 6PM</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-12">
+                <h4 class="font-bold text-white mb-4">Follow Me</h4>
+                <div class="flex gap-4">
+                  <a href="#" class="w-10 h-10 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-white transition-colors duration-300">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-white transition-colors duration-300">
+                    <i class="fa fa-github"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-white transition-colors duration-300">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-white transition-colors duration-300">
+                    <i class="fa fa-dribbble"></i>
+                  </a>
+                  <a href="#" class="w-10 h-10 rounded-full bg-cyber-neon-blue/20 flex items-center justify-center text-cyber-neon-blue hover:bg-cyber-neon-blue hover:text-white transition-colors duration-300">
+                    <i class="fa fa-behance"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="py-12 relative border-t border-cyber-neon-blue/20">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <a href="#" class="text-2xl font-bold text-white flex items-center gap-2">
+            <span class="text-cyber-neon-blue text-glow">NEON</span><span class="text-cyber-neon-pink text-glow">VOID</span>
+          </a>
+          <p class="text-gray-400 mt-2">Crafting digital experiences with cyberpunk aesthetics.</p>
+        </div>
+        
+        <div class="flex flex-col md:flex-row gap-8">
+          <div>
+            <h4 class="text-white font-bold mb-4">Navigation</h4>
+            <ul class="space-y-2">
+              <li><a href="#home" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Home</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">About</a></li>
+              <li><a href="#skills" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Skills</a></li>
+              <li><a href="#projects" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Projects</a></li>
+              <li><a href="#contact" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Contact</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-white font-bold mb-4">Services</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Web Development</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">UI/UX Design</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Mobile App Development</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Game UI Design</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-cyber-neon-blue transition-colors duration-300">Consulting</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 class="text-white font-bold mb-4">Newsletter</h4>
+            <p class="text-gray-400 mb-4">Subscribe to get the latest updates.</p>
+            <form class="flex">
+              <input type="email" placeholder="Your email" class="px-4 py-2 bg-cyber-dark/80 border border-cyber-neon-blue/50 rounded-l-sm text-white focus:outline-none focus:border-cyber-neon-blue transition-colors duration-300 flex-grow">
+              <button type="submit" class="px-4 py-2 bg-cyber-neon-blue text-white rounded-r-sm hover:bg-cyber-neon-blue/80 transition-colors duration-300">
+                <i class="fa fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 mb-4 md:mb-0">&copy; 2025 NEON|VOID. All rights reserved.</p>
+        <div class="flex gap-4">
+          <a href="#" class="text-gray-500 hover:text-cyber-neon-blue transition-colors duration-300">Privacy Policy</a>
+          <a href="#" class="text-gray-500 hover:text-cyber-neon-blue transition-colors duration-300">Terms of Service</a>
+          <a href="#" class="text-gray-500 hover:text-cyber-neon-blue transition-colors duration-300">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 回到顶部按钮 -->
+  <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-cyber-neon-pink text-white flex items-center justify-center opacity-0 invisible transition-all duration-300 z-50 hover:bg-cyber-neon-blue">
+    <i class="fa fa-arrow-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.add('bg-cyber-dark/90', 'backdrop-blur-md', 'shadow-lg');
+        navbar.classList.remove('bg-transparent');
+        
+        backToTop.classList.remove('opacity-0', 'invisible');
+        backToTop.classList.add('opacity-100', 'visible');
+      } else {
+        navbar.classList.remove('bg-cyber-dark/90', 'backdrop-blur-md', 'shadow-lg');
+        navbar.classList.add('bg-transparent');
+        
+        backToTop.classList.add('opacity-0', 'invisible');
+        backToTop.classList.remove('opacity-100', 'visible');
+      }
+    });
+    
+    // 移动端菜单
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    let menuOpen = false;
+    
+    menuBtn.addEventListener('click', () => {
+      if (!menuOpen) {
+        menuBtn.innerHTML = '<i class="fa fa-times"></i>';
+        mobileMenu.classList.remove('-translate-y-full');
+        mobileMenu.classList.add('translate-y-0');
+        menuOpen = true;
+      } else {
+        menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+        mobileMenu.classList.add('-translate-y-full');
+        mobileMenu.classList.remove('translate-y-0');
+        menuOpen = false;
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // 如果是移动端，点击后关闭菜单
+        if (menuOpen) {
+          menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+          mobileMenu.classList.add('-translate-y-full');
+          mobileMenu.classList.remove('translate-y-0');
+          menuOpen = false;
+        }
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // 回到顶部按钮
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 项目筛选
+    const projectFilters = document.querySelectorAll('.project-filter');
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectFilters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        // 更新按钮样式
+        projectFilters.forEach(btn => {
+          btn.classList.remove('bg-cyber-neon-blue', 'text-white');
+          btn.classList.add('bg-transparent', 'border', 'border-cyber-neon-blue', 'text-cyber-neon-blue');
+        });
+        
+        filter.classList.add('bg-cyber-neon-blue', 'text-white');
+        filter.classList.remove('bg-transparent', 'border', 'border-cyber-neon-blue', 'text-cyber-neon-blue');
+        
+        const category = filter.getAttribute('data-filter');
+        
+        // 筛选项目
+        projectCards.forEach(card => {
+          if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // 表单提交
+    const contactForm = document.getElementById('contactForm');
+    const formResponse = document.getElementById('formResponse');
+    
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // 这里可以添加表单验证逻辑
+      
+      // 模拟表单提交
+      setTimeout(() => {
+        contactForm.reset();
+        formResponse.classList.remove('hidden');
+        
+        // 5秒后隐藏提示
+        setTimeout(() => {
+          formResponse.classList.add('hidden');
+        }, 5000);
+      }, 1000);
+    });
+    
+    // 技能图表
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    const skillsChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['HTML/CSS', 'JavaScript', 'React', 'Vue.js', 'UI/UX Design', 'Node.js', 'Git'],
+        datasets: [{
+          label: 'Skill Level',
+          data: [95, 90, 85, 80, 88, 75, 90],
+          backgroundColor: 'rgba(5, 217, 232, 0.2)',
+          borderColor: '#05D9E8',
+          pointBackgroundColor: '#05D9E8',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: '#05D9E8'
+        }]
+      },
+      options: {
+        scales: {
+          r: {
+            angleLines: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)'
+            },
+            pointLabels: {
+              color: 'rgba(240, 240, 240, 0.8)',
+              font: {
+                family: 'Orbitron, sans-serif',
+                size: 12
+              }
+            },
+            ticks: {
+              backdropColor: 'transparent',
+              color: 'rgba(240, 240, 240, 0.6)'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>    

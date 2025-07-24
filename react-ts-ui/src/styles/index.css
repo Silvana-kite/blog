@@ -1,8 +1,40 @@
 /* @import './tailwind.css'; */
 /* // @import 'ant/dist/reset.css'; */
 /* @import 'antd/dist/reset.css'; */
+@import './responsive.css';
+:root{
+  --cyber-blue: #05D9E8;
+  --cyber-pink: #FF2A6D;
+  --cyber-green: #4fff4b;
+}
 @layer reset, antd;
 @import url(antd/dist/reset.css) layer(reset);
+
+
+body {
+  background-color: rgb(13 2 33 / var(--tw-bg-opacity, 1)) !important;
+  font-family: 'Inter', 'system-ui', 'sans-serif';
+}
+
+body::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+body.scrolling::-webkit-scrollbar{
+  background-color: rgba(1, 1, 43, 0.8);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(5,217,232,0);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+  body.scrolling::-webkit-scrollbar-thumb {
+  background-color: var(--cyber-blue);
+  }
+
 html {
   font-size: 16px; /* 与 rootValue 保持一致 */
 }
@@ -12,3 +44,7 @@ html {
     font-size: 24px; /* 响应式调整 */
   }
 }
+
+/* .ant-layout {
+  background-color: transparent !important;
+} */

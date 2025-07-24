@@ -1,0 +1,27 @@
+/* src/styles/responsive.css */
+/* 基础断点定义 */
+:root {
+    --breakpoint-sm: 640px;    /* 手机横屏 */
+    --breakpoint-md: 768px;    /* 平板竖屏 */
+    --breakpoint-lg: 1024px;   /* 平板横屏 */
+    --breakpoint-xl: 1280px;   /* 桌面设备 */
+  }
+  
+  /* 响应式工具类 */
+  .hidden {
+    display: none !important;
+  }
+  
+  /* 移动端显示（默认），大屏隐藏 */
+  @media (min-width: var(--breakpoint-md)) {
+    .mobile-only {
+      display: none !important;
+    }
+  }
+  
+  /* 大屏显示，移动端隐藏 */
+  @media (max-width: var(--breakpoint-md)) {
+    .desktop-only {
+      display: none !important;
+    }
+  }
